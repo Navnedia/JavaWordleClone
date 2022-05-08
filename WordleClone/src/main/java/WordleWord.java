@@ -1,8 +1,6 @@
 import java.io.Serializable;
 import java.util.Arrays;
 
-import javax.swing.JOptionPane;
-
 /**
  * @author Navnedia
  */
@@ -51,6 +49,20 @@ public class WordleWord implements Serializable, evaluationConstants {
 		return evaluations;
 	}
 	
+	/**
+	 * This method allows you to convert/translate a byte[] of evaluations
+	 * into a more easily understandable String[] representation. This method
+	 * is primarily for debugging purposes. 
+	 * 
+	 * @param origEvaluation {@code byte[]} to be translated.
+	 * @return A {@code String[]} that provides a more readable representation
+	 * 		   of the evaluation.
+	 * 			<ul>
+	 * 				<li>"correct" when the letter is in the word AND in the correct spot.</li>
+	 * 				<li>"present" when the letter is in the word BUT in the wrong spot.</li>
+	 * 				<li>"absent" when the letter is NOT in the word.</li>
+	 * 			</ul>
+	 */
 	public static String[] translateEvaluation(byte[] origEvaluation) {
 		String[] strEvaluation = new String[origEvaluation.length];
 		
