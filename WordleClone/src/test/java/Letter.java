@@ -2,6 +2,9 @@ import java.io.Serializable;
 
 // This is just an experiment. It's not currently being used.
 
+/**
+ * @author Navnedia
+ */
 public class Letter implements Serializable {
 	
 	private static final long serialVersionUID = -8008317498696249989L;
