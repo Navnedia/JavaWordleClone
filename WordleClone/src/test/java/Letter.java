@@ -1,6 +1,10 @@
+import java.io.Serializable;
+
 // This is just an experiment. It's not currently being used.
 
-public class Letter {
+public class Letter implements Serializable {
+	
+	private static final long serialVersionUID = -8008317498696249989L;
 	
 	private char value;
 	private String color;
