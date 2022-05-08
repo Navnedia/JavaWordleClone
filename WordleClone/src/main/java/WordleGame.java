@@ -1,6 +1,9 @@
 import java.io.Serializable;
 
-public class WordleGame  implements Serializable {
+/**
+ * @author Navnedia
+ */
+public class WordleGame  implements Serializable, evaluationConstants {
 
 	private static final long serialVersionUID = -61192559081134857L;
 	
@@ -14,11 +17,6 @@ public class WordleGame  implements Serializable {
 	private WordleWord[] guesses;
 	static final int WORD_LENGTH = 5;
 	static final int MAX_ATTEMPTS = 6;
-	
-	// Letter Evaluations:
-	static final int CORRECT = 0; // Letter is in the word AND in the correct spot.
-	static final int PRESENT = 1; // Letter is in the word BUT in the wrong spot.
-	static final int ABSENT = -1; // Letter is NOT in the word.
 	
 	
 	public WordleGame(WordleWord[] words) {
