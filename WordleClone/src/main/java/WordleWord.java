@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 /**
  * @author Navnedia
  */
-public class WordleWord implements Serializable {
+public class WordleWord implements Serializable, evaluationConstants {
 	
 	private static final long serialVersionUID = -5748366559941088303L;
 	
@@ -23,9 +23,11 @@ public class WordleWord implements Serializable {
 	 * 
 	 * @param guess the {@code String} word to evaluate against.
 	 * @return A {@code byte[]} with the evaluations of each index/letter of the word.
-	 * 		   0 when the letter is in the word AND in the correct spot.
-	 * 		   1 when the letter is in the word BUT in the wrong spot.
-	 *  	   -1 when the letter is NOT in the word.
+	 * 			<ul>
+	 * 				<li>CORRECT: 0 when the letter is in the word AND in the correct spot.</li>
+	 * 				<li>PRESENT: 1 when the letter is in the word BUT in the wrong spot.</li>
+	 * 				<li>ABSENT: -1 when the letter is NOT in the word.</li>
+	 * 			</ul>
 	 */
 	public byte[] evaluate(String guess) {
 		// Guard statement to protect against bad inputs:
@@ -54,13 +56,13 @@ public class WordleWord implements Serializable {
 		
 		for (int i = 0; i < strEvaluation.length; i++) {
 			switch (origEvaluation[i]) {
-			case WordleGame.CORRECT:
+			case CORRECT:
 				strEvaluation[i] = "correct";
 				break;
-			case WordleGame.PRESENT:
+			case PRESENT:
 				strEvaluation[i] = "present";
 				break;
-			case WordleGame.ABSENT:
+			case ABSENT:
 				strEvaluation[i] = "absent";
 				break;
 			default:
