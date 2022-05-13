@@ -115,6 +115,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 		
 		byte[] evaluation = answer.evaluate("title");
 		
+		System.out.println(Arrays.toString(evaluation));
 		System.out.println(Arrays.toString(translateEvaluation(evaluation)));
 	}
 	
