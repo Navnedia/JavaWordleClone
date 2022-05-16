@@ -12,15 +12,15 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	 * Maybe the list should actually be an array.
 	 * Maybe the wordleWords show be 
 	 */
-	private WordleWord answer;
+	private final WordleWord answer;
 	private String[][] boardEvaluations; // "correct", "present", or "absent".
 	private WordleWord[] guesses;
 	static final int WORD_LENGTH = 5;
 	static final int MAX_ATTEMPTS = 6;
 	
 	
-	public WordleGame(WordleWord[] words) {
-		this.guesses = words;
+	public WordleGame(String answerWord) {
+		this.answer = new WordleWord(answerWord);
 	}
 	
 	// This is just playing around:
@@ -40,14 +40,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	}
 	
 	public static void main(String[] args) {
-		WordleWord[] words = {new WordleWord("orate"),
-							  new WordleWord("hello"),
-							  new WordleWord("balls"),
-							  new WordleWord("fudge"),
-							  new WordleWord("dodge")};
-		
-		WordleGame wg = new WordleGame(words);
-		
+		WordleGame wg = new WordleGame("orate");
 		wg.printBoard();
 	}
 
