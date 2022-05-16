@@ -9,7 +9,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	
 	private final WordleWord answer;
 	private byte[][] boardEvaluations; // "correct" = 0, "present" = 1, or "absent" = -1.
-	private WordleWord[] guesses;
+	private String[] guesses;
 	private boolean won;
 	private boolean lost;
 	
@@ -20,7 +20,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	public WordleGame(String answerWord) {
 		this.answer = new WordleWord(answerWord);
 		this.boardEvaluations = new byte[MAX_ATTEMPTS][WORD_LENGTH];
-		this.guesses = new WordleWord[MAX_ATTEMPTS];
+		this.guesses = new String[MAX_ATTEMPTS];
 		this.won = false;
 		this.lost = false;
 	}
@@ -29,11 +29,11 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	public void printBoard() {
 		StringBuilder sb = new StringBuilder();
 		
-		for (WordleWord wordleWord : guesses) {
+		for (String word : guesses) {
 			sb.setLength(0); // Clear String Builder.
 			
 			// Construct Letter String:
-			for (char letter : wordleWord.wordValue.toCharArray()) {
+			for (char letter : word.toCharArray()) {
 				sb.append("[" + ConsoleColor.GREEN + letter + ConsoleColor.RESET + "]");
 			}
 			System.out.println(sb.toString() + "\n");
