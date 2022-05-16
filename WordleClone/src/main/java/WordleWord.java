@@ -8,7 +8,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 	
 	private static final long serialVersionUID = -5748366559941088303L;
 	
-	public String wordValue;
+	public final String wordValue;
 	
 	
 	public WordleWord(String word) {
