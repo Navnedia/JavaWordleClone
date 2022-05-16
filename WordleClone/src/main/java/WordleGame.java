@@ -11,18 +11,25 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private final WordleWord answer;
 	private byte[][] boardEvaluations; // "correct" = 0, "present" = 1, or "absent" = -1.
 	private String[] guesses;
+	private final int wordLength;
+	private final int maxAttempts;
 	private boolean won;
 	private boolean lost;
 	
+	
+	// Default parameters:
 	static final int DEFAULT_WORD_LENGTH = 5;
 	static final int DEFAULT_MAX_ATTEMPTS = 6;
 	
 	public WordleGame(String answerWord) {
 		this.answer = new WordleWord(answerWord);
-		initalizeEvaluations(DEFAULT_MAX_ATTEMPTS, DEFAULT_WORD_LENGTH);
-		initalizeGuesses(DEFAULT_MAX_ATTEMPTS, DEFAULT_WORD_LENGTH);
+		this.wordLength = DEFAULT_WORD_LENGTH;
+		this.maxAttempts = DEFAULT_MAX_ATTEMPTS;
 		this.won = false;
 		this.lost = false;
+		
+		initalizeEvaluations();
+		initalizeGuesses();
 	}
 	
 	/*  TEMPORARY!!!
@@ -31,8 +38,8 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	 *  In the future instead of filling them just only define the rows length
 	 *  and handle the null arrays in the print or display methods.
 	 */
-	private void initalizeEvaluations(int attempts, int wordLength) {
-		this.boardEvaluations = new byte[DEFAULT_MAX_ATTEMPTS][DEFAULT_WORD_LENGTH];
+	private void initalizeEvaluations() {
+		this.boardEvaluations = new byte[maxAttempts][wordLength];
 		
 		for (byte[] row : boardEvaluations) {
 			Arrays.fill(row, (byte) -1);
@@ -46,8 +53,8 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	 *  In the future instead of filling them with spaces just handle the null
 	 *  values in the print or display methods.
 	 */
-	private void initalizeGuesses(int attempts, int wordLength) {
-		this.guesses = new String[attempts];
+	private void initalizeGuesses() {
+		this.guesses = new String[maxAttempts];
 		
 		for (int i = 0; i < guesses.length; i++) {
 			guesses[i] = "";
