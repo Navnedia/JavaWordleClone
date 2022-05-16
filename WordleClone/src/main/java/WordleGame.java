@@ -19,8 +19,8 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private String[] guesses;
 	private final int wordLength;
 	private final int maxAttempts;
-	private boolean won;
-	private boolean lost;
+	private boolean won; // NOT SURE IF THIS WILL BE NEEDED.
+	private boolean lost; // NOT SURE IF THIS WILL BE NEEDED.
 	
 	
 	public WordleGame(String answerWord) {
@@ -43,6 +43,10 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private void initEvaluations() { // Initialize evaluations
 		this.boardEvaluations = new byte[maxAttempts][wordLength];
 		
+		/* Fill every column in every row with the -1 byte representing a blank
+		 * evaluation of absent. This is so the evaluation is absent by default.
+		 * This is done as a temporary solution; see method comment.
+		 */
 		for (byte[] row : boardEvaluations) {
 			Arrays.fill(row, (byte) -1);
 		}
@@ -57,6 +61,10 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private void initGuesses() { // Initialize guesses
 		this.guesses = new String[maxAttempts];
 		
+		/* Fill each guess string with a string consisting of the appropriate
+		 * number of blank spaces. This is done as a temporary solution; see
+		 * method comment.
+		 */
 		for (int i = 0; i < guesses.length; i++) {
 			guesses[i] = "";
 			for (int spaces = 0; spaces < wordLength; spaces++) {
