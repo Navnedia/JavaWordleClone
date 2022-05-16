@@ -8,6 +8,11 @@ public class WordleGame  implements Serializable, evaluationConstants {
 
 	private static final long serialVersionUID = -61192559081134857L;
 	
+	// Default parameters (class attributes):
+	private static final int DEFAULT_WORD_LENGTH = 5;
+	private static final int DEFAULT_MAX_ATTEMPTS = 6;
+	
+	// Instance attributes: 
 	private final WordleWord answer;
 	private byte[][] boardEvaluations; // "correct" = 0, "present" = 1, or "absent" = -1.
 	private String[] guesses;
@@ -15,11 +20,6 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private final int maxAttempts;
 	private boolean won;
 	private boolean lost;
-	
-	
-	// Default parameters:
-	static final int DEFAULT_WORD_LENGTH = 5;
-	static final int DEFAULT_MAX_ATTEMPTS = 6;
 	
 	public WordleGame(String answerWord) {
 		this.answer = new WordleWord(answerWord);
