@@ -1,5 +1,7 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Navnedia
@@ -23,6 +25,19 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private boolean lost; // NOT SURE IF THIS WILL BE NEEDED.
 	
 	
+	// Constructor for randomly selected answer word:
+	public WordleGame() {
+		this.answer = new WordleWord(selectAnswer());
+		this.wordLength = DEFAULT_WORD_LENGTH;
+		this.maxAttempts = DEFAULT_MAX_ATTEMPTS;
+		this.won = false;
+		this.lost = false;
+		
+		initEvaluations();
+		initGuesses();
+	}
+	
+	// Constructor for custom answer word:
 	public WordleGame(String answerWord) {
 		this.answer = new WordleWord(answerWord);
 		this.wordLength = DEFAULT_WORD_LENGTH;
@@ -32,6 +47,15 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		
 		initEvaluations();
 		initGuesses();
+	}
+	
+	
+	// Loads words and selects a random one as the answer:
+	// This might be changed or optimized in the future.
+	private String selectAnswer() {
+		List<String> wordList = new ArrayList<>();
+		
+		return null;
 	}
 	
 	/*  TEMPORARY!!!
@@ -73,6 +97,10 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		}
 	}
 	
+	
+	public void addGuess() {
+		
+	}
 	
 	// This is just playing around:
 	public void printBoard() {
