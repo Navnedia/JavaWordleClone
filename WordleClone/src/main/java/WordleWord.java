@@ -27,7 +27,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 	 * 				<li>ABSENT: -1 when the letter is NOT in the word.</li>
 	 * 			</ul>
 	 */
-	public byte[] evaluate(String guess) {
+	public byte[] evaluateSimple(String guess) {
 		// Guard statement to protect against bad inputs:
 		if (guess == null || guess.length() != wordValue.length()) { throw new IllegalArgumentException();}
 		
@@ -38,16 +38,44 @@ public class WordleWord implements Serializable, evaluationConstants {
 			int location = wordValue.indexOf(guessChars[i]);
 			
 			if (location == i) {
-				evaluations[i] = WordleGame.CORRECT;
+				evaluations[i] = CORRECT;
 			} else if (location >= 0) {
-				evaluations[i] = WordleGame.PRESENT;
+				evaluations[i] = PRESENT;
 			} else {
-				evaluations[i] = WordleGame.ABSENT;
+				evaluations[i] = ABSENT;
 			}
 		}
 		
 		return evaluations;
 	}
+	
+	
+	public byte[] evaluateAdvanced(String guess) {
+		// Guard statement to protect against bad inputs:
+		if (guess == null || guess.length() != wordValue.length()) { throw new IllegalArgumentException();}
+		
+		char[] guessChars = guess.toCharArray();
+		byte[] evaluations = new byte[wordValue.length()];
+		Arrays.fill(evaluations, ABSENT);
+		
+		for (int answerIndex = 0; answerIndex < wordValue.length(); answerIndex++) {
+			char answerLetter = wordValue.charAt(answerIndex);
+			
+			if (guessChars[answerIndex] == answerLetter) {
+				evaluations[answerIndex] = CORRECT;
+			} else {
+				for (int guessIndex = 0; guessIndex < guessChars.length; guessIndex++) {
+					if ((evaluations[guessIndex] != PRESENT && evaluations[guessIndex] != CORRECT) && (guessChars[guessIndex] == answerLetter)) {
+						evaluations[guessIndex] = PRESENT;
+						break;
+					}
+				}
+			}
+		}
+		
+		return evaluations;
+	}
+	
 	
 	/**
 	 * This method allows you to convert/translate a byte[] of evaluations
@@ -113,7 +141,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 	public static void main(String[] args) {
 		WordleWord answer = new WordleWord("midst");
 		
-		byte[] evaluation = answer.evaluate("title");
+		byte[] evaluation = answer.evaluateAdvanced("title");
 		
 		System.out.println(Arrays.toString(evaluation));
 		System.out.println(Arrays.toString(translateEvaluation(evaluation)));
