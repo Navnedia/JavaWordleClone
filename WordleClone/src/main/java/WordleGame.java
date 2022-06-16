@@ -1,7 +1,11 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Navnedia
@@ -52,10 +56,24 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	
 	// Loads words and selects a random one as the answer:
 	// This might be changed or optimized in the future.
-	private String selectAnswer() {
+	private static String selectAnswer() {
 		List<String> wordList = new ArrayList<>();
+		Random rand = new Random();
 		
-		return null;
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\wordList.txt"));
+			
+			String line;
+			while ((line = br.readLine()) != null) {
+				wordList.add(line);
+			}
+			
+			br.close();
+		} catch (Exception  e) {
+			e.printStackTrace();
+		}
+		
+		return wordList.get(rand.nextInt(wordList.size()));
 	}
 	
 	/*  TEMPORARY!!!
@@ -118,9 +136,9 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	}
 	
 	public static void main(String[] args) {
-		WordleGame wg = new WordleGame("orate");
-		
-		wg.printBoard();
+//		WordleGame wg = new WordleGame("orate");
+//		
+//		wg.printBoard();
 	}
 
 }
