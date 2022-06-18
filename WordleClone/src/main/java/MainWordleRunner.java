@@ -1,7 +1,13 @@
 public class MainWordleRunner {
 	
-	public transient WordleGame game;
+	public WordleGame game;
 
+	
+	public static void main(String[] args) {
+		new MainWordleRunner().runGame();
+	}
+	
+	
 	
 	// Used when starting/loading a new game:
 	public MainWordleRunner() {
@@ -19,11 +25,6 @@ public class MainWordleRunner {
 		System.out.println("hi");
 	}
 	
-	
-	
-	public static void main(String[] args) {
-		new MainWordleRunner().runGame();
-	}
 	
 	// Should this be static or no? 
 	// Should this take a file path argument?
