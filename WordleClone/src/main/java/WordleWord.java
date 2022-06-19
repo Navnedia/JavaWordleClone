@@ -49,7 +49,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 		return evaluations;
 	}
 	
-	
+	// Add comments, reference notes, optimize, test.
 	public byte[] evaluateAdvanced(String guess) {
 		// Guard statement to protect against bad inputs:
 		if (guess == null || guess.length() != wordValue.length()) { throw new IllegalArgumentException();}
@@ -63,6 +63,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 			
 			if (guessChars[answerIndex] == answerLetter) {
 				evaluations[answerIndex] = CORRECT;
+				// You could have it keep a running total of how many are correct and if it is all of them, then win.
 			} else {
 				for (int guessIndex = 0; guessIndex < guessChars.length; guessIndex++) {
 					if ((evaluations[guessIndex] != PRESENT && evaluations[guessIndex] != CORRECT) && (guessChars[guessIndex] == answerLetter)) {
