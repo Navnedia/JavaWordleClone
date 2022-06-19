@@ -153,43 +153,89 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		guess = guess.toUpperCase();
 		guesses[nextIndex] = guess;
 		boardEvaluations[nextIndex++] = answer.evaluateAdvanced(guess);
+		printBoard();
 		
 		return true;
 	}
 	
+	
+	public boolean isWin() {
+		for (byte eval : boardEvaluations[nextIndex - 1]) {
+			if (eval != CORRECT) {
+				return false;
+			}
+		}
+		
+		return true;
+		
+//		for (byte[] wordEval : boardEvaluations) {
+//			boolean winningWord = true;
+//			
+//			for (byte letterEval : wordEval) {
+//				if (letterEval != CORRECT) {
+//					winningWord = false;
+//					break;
+//				}
+//			}
+//			
+//			if (winningWord) {return true;}
+//		}
+//		
+//		return false;
+	}
+	
+	public boolean isLose() {
+		// If the number of 
+		return nextIndex >= maxAttempts && !isWin();
+	}
+	
+	public String getLastGuessWord() {
+		return guesses[nextIndex - 1];
+	}
+	
+	public byte[] getLastGuessEval() {
+		return boardEvaluations[nextIndex - 1];
+	}
+	
 	public void printBoard() {
 		System.out.println(this.toString());
+		
+		// Testing!!!!
+		System.out.println("Win: " + isWin());
+		System.out.println("Lost: " + isLose() + "\n");
+		
 	}
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("------------------------------------\n\n");
 		
 		for (int guessIndex = 0; guessIndex < guesses.length; guessIndex++) {
 			String[] evalColors = WordleWord.translateToColors(boardEvaluations[guessIndex]);
 			char[] word = guesses[guessIndex].toCharArray();
+			sb.append("|");
 			
 			// Construct Letter String:
 			for (int letterIndex = 0; letterIndex < word.length; letterIndex++) {
-				sb.append("[" + evalColors[letterIndex] + word[letterIndex] + ConsoleColor.RESET + "]");
+				sb.append(" " + evalColors[letterIndex] + word[letterIndex] + ConsoleColor.RESET + " ");
 			}
 			
-			sb.append("\n");
+			sb.append("|\n");
 		}
 		
 		return sb.toString();
 	}
 	
 	public static void main(String[] args) {
-		WordleGame game = new WordleGame("midst");
+		WordleGame game = new WordleGame();
 		
 		game.addGuess("orate");
 		game.addGuess("thank");
 		game.addGuess("still");
 		game.addGuess("buist");
 		game.addGuess("midst");
-		
-		game.printBoard();
+		game.addGuess("calls");
+//		game.addGuess("minds");
 	}
 
 }

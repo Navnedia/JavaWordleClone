@@ -63,8 +63,8 @@ public class WordleWord implements Serializable, evaluationConstants {
 			
 			if (guessChars[answerIndex] == answerLetter) {
 				evaluations[answerIndex] = CORRECT;
-				// You could have it keep a running total of how many are correct and if it is all of them, then win.
 			} else {
+				// You could set won to true and set it false if you get here, But then that would mean this always needs to be run first.
 				for (int guessIndex = 0; guessIndex < guessChars.length; guessIndex++) {
 					if ((evaluations[guessIndex] != PRESENT && evaluations[guessIndex] != CORRECT) && (guessChars[guessIndex] == answerLetter)) {
 						evaluations[guessIndex] = PRESENT;

@@ -21,7 +21,7 @@ public class MainWordleRunner {
 	
 	public void runGame() {
 		// Get inputs and run game here!!
-		System.out.println("hi");
+		
 	}
 	
 	
