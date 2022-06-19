@@ -1,9 +1,10 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private final WordleWord answer;
 	private byte[][] boardEvaluations; // "correct" = 0, "present" = 1, or "absent" = -1.
 	private String[] guesses;
+	private List<String> validWords; // Contains a list of accepted words.
 	private final int wordLength;
 	private final int maxAttempts;
 	private boolean won; // NOT SURE IF THIS WILL BE NEEDED.
@@ -37,6 +39,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		this.won = false;
 		this.lost = false;
 		
+		initValidWords();
 		initEvaluations();
 		initGuesses();
 	}
@@ -49,6 +52,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		this.won = false;
 		this.lost = false;
 		
+		initValidWords();
 		initEvaluations();
 		initGuesses();
 	}
@@ -116,6 +120,35 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	}
 	
 	
+	private void initValidWords() {
+		this.validWords = new ArrayList<>();
+	
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("src//main//resources//validGuesses.txt"));
+			
+			String line;
+			while ((line = br.readLine()) != null) {
+				validWords.add(line);
+			}
+			
+			br.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Validates input against the valid words list to ensure the word
+	 * is a valid accepted word.
+	 * 
+	 * @param guess {@code String} to validate.
+	 * @return {@code true} if the word is in the list.
+	 */
+	public boolean isValid(String guess) {
+		return Collections.binarySearch(validWords, guess.toUpperCase()) >= 0;
+	}
+	
+	
 	public void addGuess() {
 		
 	}
@@ -139,6 +172,9 @@ public class WordleGame  implements Serializable, evaluationConstants {
 //		WordleGame wg = new WordleGame("orate");
 //		
 //		wg.printBoard();
+		WordleGame game = new WordleGame();
+		System.out.println(game.isValid("cat"));
+		System.out.println(game.isValid("balls"));
 	}
 
 }
