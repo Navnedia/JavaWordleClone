@@ -113,6 +113,28 @@ public class WordleWord implements Serializable, evaluationConstants {
 		
 		return strEvaluation;
 	}
+	
+	public static String[] translateToColors(byte[] origEvaluation) {
+		String[] colorEvaluation = new String[origEvaluation.length];
+		
+		for (int i = 0; i < colorEvaluation.length; i++) {
+			switch (origEvaluation[i]) {
+			case CORRECT:
+				colorEvaluation[i] = ConsoleColor.GREEN;
+				break;
+			case PRESENT:
+				colorEvaluation[i] = ConsoleColor.YELLOW;
+				break;
+			case ABSENT:
+				colorEvaluation[i] = "";
+				break;
+			default:
+				throw new IllegalArgumentException("Input contains an invalid evaluation int");
+			}
+		}
+		
+		return colorEvaluation;
+	}
 
 	@Override
 	public int hashCode() {

@@ -165,10 +165,13 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		for (String word : guesses) {
+		for (int guessIndex = 0; guessIndex < guesses.length; guessIndex++) {
+			String[] evalColors = WordleWord.translateToColors(boardEvaluations[guessIndex]);
+			char[] word = guesses[guessIndex].toCharArray();
+			
 			// Construct Letter String:
-			for (char letter : word.toCharArray()) {
-				sb.append("[" + ConsoleColor.GREEN + letter + ConsoleColor.RESET + "]");
+			for (int letterIndex = 0; letterIndex < word.length; letterIndex++) {
+				sb.append("[" + evalColors[letterIndex] + word[letterIndex] + ConsoleColor.RESET + "]");
 			}
 			
 			sb.append("\n");
@@ -185,6 +188,8 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		game.addGuess("still");
 		game.addGuess("buist");
 		game.addGuess("midst");
+		
+		game.printBoard();
 	}
 
 }
