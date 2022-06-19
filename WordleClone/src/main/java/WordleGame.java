@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,11 +23,12 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	private final WordleWord answer;
 	private byte[][] boardEvaluations; // "correct" = 0, "present" = 1, or "absent" = -1.
 	private String[] guesses;
+	private int nextIndex = 0; // This holds the index to place the next guess in the guesses array, and the row for the boardEvaluations.
 	private List<String> validWords; // Contains a list of accepted words.
 	private final int wordLength;
 	private final int maxAttempts;
-	private boolean won; // NOT SURE IF THIS WILL BE NEEDED.
-	private boolean lost; // NOT SURE IF THIS WILL BE NEEDED.
+	private boolean won = false; // NOT SURE IF THIS WILL BE NEEDED.
+	private boolean lost = false; // NOT SURE IF THIS WILL BE NEEDED.
 	
 	
 	// Constructor for randomly selected answer word:
@@ -36,8 +36,6 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		this.answer = new WordleWord(selectAnswer());
 		this.wordLength = DEFAULT_WORD_LENGTH;
 		this.maxAttempts = DEFAULT_MAX_ATTEMPTS;
-		this.won = false;
-		this.lost = false;
 		
 		initValidWords();
 		initEvaluations();
@@ -46,11 +44,9 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	
 	// Constructor for custom answer word:
 	public WordleGame(String answerWord) {
-		this.answer = new WordleWord(answerWord);
+		this.answer = new WordleWord(answerWord.toUpperCase());
 		this.wordLength = DEFAULT_WORD_LENGTH;
 		this.maxAttempts = DEFAULT_MAX_ATTEMPTS;
-		this.won = false;
-		this.lost = false;
 		
 		initValidWords();
 		initEvaluations();
@@ -144,37 +140,51 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	 * @param guess {@code String} to validate.
 	 * @return {@code true} if the word is in the list.
 	 */
-	public boolean isValid(String guess) {
+	private boolean isValid(String guess) {
 		return Collections.binarySearch(validWords, guess.toUpperCase()) >= 0;
 	}
 	
 	
-	public void addGuess() {
+	public boolean addGuess(String guess) {
+		if (guess == null || guess.length() != wordLength || !isValid(guess)) {
+			return false;
+		}
 		
+		guess = guess.toUpperCase();
+		guesses[nextIndex] = guess;
+		boardEvaluations[nextIndex++] = answer.evaluateAdvanced(guess);
+		
+		return true;
 	}
 	
-	// This is just playing around:
 	public void printBoard() {
+		System.out.println(this.toString());
+	}
+	
+	@Override
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
 		for (String word : guesses) {
-			sb.setLength(0); // Clear String Builder.
-			
 			// Construct Letter String:
 			for (char letter : word.toCharArray()) {
 				sb.append("[" + ConsoleColor.GREEN + letter + ConsoleColor.RESET + "]");
 			}
-			System.out.println(sb.toString() + "\n");
+			
+			sb.append("\n");
 		}
+		
+		return sb.toString();
 	}
 	
 	public static void main(String[] args) {
-//		WordleGame wg = new WordleGame("orate");
-//		
-//		wg.printBoard();
-		WordleGame game = new WordleGame();
-		System.out.println(game.isValid("cat"));
-		System.out.println(game.isValid("balls"));
+		WordleGame game = new WordleGame("midst");
+		
+		game.addGuess("orate");
+		game.addGuess("thank");
+		game.addGuess("still");
+		game.addGuess("buist");
+		game.addGuess("midst");
 	}
 
 }
