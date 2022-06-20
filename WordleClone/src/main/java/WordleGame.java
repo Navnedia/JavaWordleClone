@@ -146,7 +146,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	
 	
 	public boolean addGuess(String guess) {
-		if (guess == null || guess.length() != wordLength || !isValid(guess)) {
+		if (isLose() || guess == null || guess.length() != wordLength || !isValid(guess)) {
 			return false;
 		}
 		
@@ -160,6 +160,8 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	
 	
 	public boolean isWin() {
+		if (nextIndex == 0) {return false;} // No guesses made. Game not started.
+		
 		for (byte eval : boardEvaluations[nextIndex - 1]) {
 			if (eval != CORRECT) {
 				return false;

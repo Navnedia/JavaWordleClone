@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 public class MainWordleRunner {
 	
 	public WordleGame game;
@@ -11,7 +13,7 @@ public class MainWordleRunner {
 	
 	// Used when starting/loading a new game:
 	public MainWordleRunner() {
-		this.game = new WordleGame(null);
+		this.game = new WordleGame();
 	}
 	
 	// Used when loading an existing game:
@@ -22,6 +24,14 @@ public class MainWordleRunner {
 	public void runGame() {
 		// Get inputs and run game here!!
 		
+		while (!game.isWin() && !game.isLose()) {
+			boolean guessValid = false;
+			
+			while (!guessValid) {
+				String guessInput = JOptionPane.showInputDialog("Enter your guess:");
+				guessValid = game.addGuess(guessInput);
+			}
+		}
 	}
 	
 	
