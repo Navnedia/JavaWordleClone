@@ -50,7 +50,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 	}
 	
 	// Add comments, reference notes, optimize, test.
-	public byte[] evaluateAdvanced(String guess) {
+	public byte[] evaluate(String guess) {
 		// Guard statement to protect against bad inputs:
 		if (guess == null || guess.length() != wordValue.length()) { throw new IllegalArgumentException();}
 		
@@ -164,7 +164,7 @@ public class WordleWord implements Serializable, evaluationConstants {
 	public static void main(String[] args) {
 		WordleWord answer = new WordleWord("midst");
 		
-		byte[] evaluation = answer.evaluateAdvanced("title");
+		byte[] evaluation = answer.evaluate("title");
 		
 		System.out.println(Arrays.toString(evaluation));
 		System.out.println(Arrays.toString(translateEvaluation(evaluation)));

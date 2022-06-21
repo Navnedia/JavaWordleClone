@@ -153,7 +153,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		
 		guess = guess.toUpperCase();
 		guesses[nextIndex] = guess;
-		boardEvaluations[nextIndex++] = answer.evaluateAdvanced(guess);
+		boardEvaluations[nextIndex++] = answer.evaluate(guess);
 		printBoard();
 		
 		return true;
