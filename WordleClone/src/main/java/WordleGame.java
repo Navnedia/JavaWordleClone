@@ -146,9 +146,10 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	
 	
 	public boolean addGuess(String guess) {
-		if (isLose() || guess == null || guess.length() != wordLength || !isValid(guess)) {
+		if (hasWon() || (nextIndex >= maxAttempts) || (guess == null) || (guess.length() != wordLength) || !isValid(guess)) {
 			return false;
 		}
+		// Should I check game win?
 		
 		guess = guess.toUpperCase();
 		guesses[nextIndex] = guess;
@@ -159,16 +160,21 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	}
 	
 	
-	public boolean isWin() {
-		if (nextIndex == 0) {return false;} // No guesses made. Game not started.
+	public boolean hasWon() {
+		// If no guesses have been made (i.e. game not started), then win is false:
+		if (nextIndex == 0) {return false;}
 		
+		// For every letter evaluation is the last guess check if all the letters are correct.
 		for (byte eval : boardEvaluations[nextIndex - 1]) {
 			if (eval != CORRECT) {
+				// If any letter is incorrect, the guess is wrong.
 				return false;
 			}
 		}
 		
 		return true;
+		
+		// Should I check all the rows, or only the last?
 		
 //		for (byte[] wordEval : boardEvaluations) {
 //			boolean winningWord = true;
@@ -186,12 +192,12 @@ public class WordleGame  implements Serializable, evaluationConstants {
 //		return false;
 	}
 	
-	public boolean isLose() {
+	public boolean hasLost() {
 		// If the number of 
-		return nextIndex >= maxAttempts && !isWin();
+		return nextIndex >= maxAttempts && !hasWon();
 	}
 	
-	public String getLastGuessWord() {
+	public String getLastGuess() {
 		return guesses[nextIndex - 1];
 	}
 	
@@ -203,8 +209,8 @@ public class WordleGame  implements Serializable, evaluationConstants {
 		System.out.println(this.toString());
 		
 		// Testing!!!!
-		System.out.println("Win: " + isWin());
-		System.out.println("Lost: " + isLose() + "\n");
+		System.out.println("Win: " + hasWon());
+		System.out.println("Lost: " + hasLost() + "\n");
 		
 	}
 	
@@ -229,7 +235,7 @@ public class WordleGame  implements Serializable, evaluationConstants {
 	}
 	
 	public static void main(String[] args) {
-		WordleGame game = new WordleGame();
+		WordleGame game = new WordleGame("midst");
 		
 		game.addGuess("orate");
 		game.addGuess("thank");

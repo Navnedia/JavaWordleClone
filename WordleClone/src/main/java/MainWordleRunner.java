@@ -24,7 +24,7 @@ public class MainWordleRunner {
 	public void runGame() {
 		// Get inputs and run game here!!
 		
-		while (!game.isWin() && !game.isLose()) {
+		while (!game.hasWon() && !game.hasLost()) {
 			boolean guessValid = false;
 			
 			while (!guessValid) {
