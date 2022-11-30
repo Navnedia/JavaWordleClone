@@ -1,2 +1,2 @@
-# Java Wordle Clone
-Building a Wordle Clone in Java
+# A Command Line Java Wordle Clone
+This was mostly just for fun.
